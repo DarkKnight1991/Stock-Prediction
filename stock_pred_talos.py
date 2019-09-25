@@ -166,7 +166,7 @@ class LogMetrics(Callback):
 
     def on_epoch_end(self, epoch, logs):
         for i, key in enumerate(self.self_params.keys()):
-            if type(self.param[key]) is str: logs[key] = self.self_params[key].index(self.param[key])
+            if type(self.param[key]) is str and type(self.self_params[key]) is list: logs[key] = self.self_params[key].index(self.param[key])
             else: logs[key] = self.param[key]
         logs["combination_number"] = self.comb_no
 
