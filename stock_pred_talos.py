@@ -166,7 +166,8 @@ class LogMetrics(Callback):
 
     def on_epoch_end(self, epoch, logs):
         for i, key in enumerate(self.self_params.keys()):
-            logs[key] = self.param[key]
+            if not type(self.param[key]) is str: logs[key] = self.param[key]
+            else: logs[key] = self.self_params[key].index(self.param[key])
         logs["combination_number"] = self.comb_no
 
 
@@ -260,8 +261,9 @@ t = ta.Scan(x=mat,
             y=mat[:,0],
             model=create_model_talos,
             params=search_params,
-            dataset_name='stock_ge',
-            experiment_no='1')
+            experiment_name='stock_ge[1]')
+            #dataset_name='stock_ge',
+            #experiment_no='1')
 
 pickle.dump(t, open(os.path.join(OUTPUT_PATH,"talos_res"),"wb"))
 
